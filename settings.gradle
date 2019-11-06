@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':GooglePaySample'
 rootProject.name='Android Samples'

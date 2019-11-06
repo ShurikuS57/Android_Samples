@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Google Pay Sample</string>
+    <string name="symbol_minis">—</string>
+    <string name="symbol_plus">+</string>
+    <string name="title_shopping_cart">Shopping Card</string>
+    <string name="total_amount">Total amount</string>
+    <string name="go_to_payment">Go to payment</string>
+    <string name="zero_dollars">$ 0</string>
+    <string name="format_dollar">$%s</string>
+</resources>
