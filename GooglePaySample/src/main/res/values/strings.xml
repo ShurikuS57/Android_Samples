@@ -7,4 +7,5 @@
     <string name="go_to_payment">Go to payment</string>
     <string name="zero_dollars">$ 0</string>
     <string name="format_dollar">$%s</string>
+    <string name="enter_credit_card">Buy with credit card</string>
 </resources>

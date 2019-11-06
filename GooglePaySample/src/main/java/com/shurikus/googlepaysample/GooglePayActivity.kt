@@ -17,6 +17,11 @@ class GooglePayActivity : AppCompatActivity() {
 
         calculateTotalAmount(productList)
         setupProductList()
+
+        button_go_to_payment.setOnClickListener {
+            val paymentDialog = ChoicePaymentBottomDialogFragment.newInstance()
+            paymentDialog.show(supportFragmentManager, ChoicePaymentBottomDialogFragment.TAG)
+        }
     }
 
     private fun setupProductList() {
