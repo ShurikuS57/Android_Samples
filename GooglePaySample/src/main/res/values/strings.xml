@@ -8,4 +8,5 @@
     <string name="zero_dollars">$ 0</string>
     <string name="format_dollar">$%s</string>
     <string name="enter_credit_card">Buy with credit card</string>
+    <string name="payments_show_name" translatable="false">Successfully received payment data for %s!</string>
 </resources>

@@ -1,7 +1,8 @@
 package com.shurikus.googlepaysample
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.shurikus.googlepaysample.adapters.OnProductCallback
 import com.shurikus.googlepaysample.adapters.ProductAdapter
 import com.shurikus.googlepaysample.extentions.round
@@ -11,6 +12,8 @@ import kotlinx.android.synthetic.main.activity_google_pay.*
 
 class GooglePayActivity : AppCompatActivity() {
 
+    private lateinit var paymentDialog: ChoicePaymentBottomDialogFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_pay)
@@ -19,9 +22,14 @@ class GooglePayActivity : AppCompatActivity() {
         setupProductList()
 
         button_go_to_payment.setOnClickListener {
-            val paymentDialog = ChoicePaymentBottomDialogFragment.newInstance()
+            paymentDialog = ChoicePaymentBottomDialogFragment.newInstance(productList)
             paymentDialog.show(supportFragmentManager, ChoicePaymentBottomDialogFragment.TAG)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        paymentDialog.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun setupProductList() {
