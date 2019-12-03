@@ -13,11 +13,13 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
+import com.shurikus.googlepaysample.creditcard.EnterCreditCardActivity
 import com.shurikus.googlepaysample.extentions.fromJsonAuto
 import com.shurikus.googlepaysample.extentions.toJsonAuto
 import com.shurikus.googlepaysample.models.ProductEntity
 import com.shurikus.googlepaysample.pay.PaymentsUtil
 import com.shurikus.googlepaysample.pay.microsToString
+import com.shurikus.googlepaysample.utils.CalculateUtils
 import kotlinx.android.synthetic.main.bs_choise_payment_method.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -41,6 +43,10 @@ class ChoicePaymentBottomDialogFragment : BottomSheetDialogFragment() {
         paymentsClient = PaymentsUtil.createPaymentsClient(requireActivity())
         possiblyShowGooglePayButton()
         button_google_pay.setOnClickListener { requestPayment() }
+
+        button_buy_card.setOnClickListener {
+            startActivity(EnterCreditCardActivity.buildIntent(requireContext(), selectProductList))
+        }
     }
 
     private fun possiblyShowGooglePayButton() {
@@ -70,7 +76,8 @@ class ChoicePaymentBottomDialogFragment : BottomSheetDialogFragment() {
 
     private fun requestPayment() {
         button_google_pay.isClickable = false
-        val price = (calculatePrice() * 1000000).roundToLong().microsToString()
+        val calcPrice = CalculateUtils.calculatePrice(selectProductList)
+        val price = (calcPrice * 1000000).roundToLong().microsToString()
         val paymentDataRequestJson = PaymentsUtil.getPaymentDataRequest(price)
         if (paymentDataRequestJson == null) {
             Log.e("RequestPayment", "Can't fetch payment data request")
@@ -81,14 +88,6 @@ class ChoicePaymentBottomDialogFragment : BottomSheetDialogFragment() {
             AutoResolveHelper.resolveTask(
                 paymentsClient.loadPaymentData(request), requireActivity(), LOAD_PAYMENT_DATA_REQUEST_CODE)
         }
-    }
-
-    private fun calculatePrice(): Double {
-        var price = 0.0
-        selectProductList.forEach {
-            price += it.price * it.count
-        }
-        return price
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

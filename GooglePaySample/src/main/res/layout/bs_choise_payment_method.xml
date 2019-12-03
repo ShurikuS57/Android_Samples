@@ -11,6 +11,7 @@
         layout="@layout/buy_with_googlepay_button" />
 
     <FrameLayout
+        android:id="@+id/button_buy_card"
         android:layout_width="match_parent"
         android:layout_height="48sp"
         android:layout_marginTop="16dp"
