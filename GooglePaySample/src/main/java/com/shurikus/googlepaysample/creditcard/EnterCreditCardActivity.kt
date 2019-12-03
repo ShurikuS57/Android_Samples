@@ -4,16 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
-import com.shurikus.googlepaysample.ChoicePaymentBottomDialogFragment
 import com.shurikus.googlepaysample.R
 import com.shurikus.googlepaysample.extentions.fromJsonAuto
 import com.shurikus.googlepaysample.extentions.toJsonAuto
 import com.shurikus.googlepaysample.models.ProductEntity
 import com.shurikus.googlepaysample.utils.CalculateUtils
+import com.shurikus.googlepaysample.utils.PriceFormatUtils
 import com.tenbis.library.consts.CardType
 import com.tenbis.library.listeners.OnCreditCardStateChanged
 import com.tenbis.library.models.CreditCard
@@ -33,7 +32,8 @@ class EnterCreditCardActivity: AppCompatActivity(), OnCreditCardStateChanged {
         compact_credit_card_input.addOnCreditCardStateChangedListener(this)
 
         val price = CalculateUtils.calculatePrice(selectProductList)
-        text_total_amount.text = getString(R.string.format_dollar, price.toString())
+        val formatPrice = PriceFormatUtils.priceFormat(price)
+        text_total_amount.text = getString(R.string.format_dollar, formatPrice)
         button_pay.setOnClickListener {
             showLoadingAnimation()
         }

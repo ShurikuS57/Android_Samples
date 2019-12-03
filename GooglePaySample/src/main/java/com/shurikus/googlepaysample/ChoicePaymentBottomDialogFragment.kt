@@ -42,10 +42,14 @@ class ChoicePaymentBottomDialogFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         paymentsClient = PaymentsUtil.createPaymentsClient(requireActivity())
         possiblyShowGooglePayButton()
-        button_google_pay.setOnClickListener { requestPayment() }
+        button_google_pay.setOnClickListener {
+            requestPayment()
+            dismiss()
+        }
 
         button_buy_card.setOnClickListener {
             startActivity(EnterCreditCardActivity.buildIntent(requireContext(), selectProductList))
+            dismiss()
         }
     }
 
@@ -70,7 +74,7 @@ class ChoicePaymentBottomDialogFragment : BottomSheetDialogFragment() {
             Toast.makeText(
                 requireContext(),
                 "Unfortunately, Google Pay is not available on this device",
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_LONG).show()
         }
     }
 
